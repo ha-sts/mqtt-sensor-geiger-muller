@@ -3,24 +3,10 @@
 
 #include "Arduino.h"
 
-// This shouldn't be here.  The pins should be passed in through a constructor or setup function
-//#define GM_PULSE 12
-
 #define RW_HISTORY_LENGTH 200
 #define RW_HISTORY_UNIT 6
 #define RW_PROCESS_PERIOD 160
 #define RW_KALPHA 53.032
-
-// Function Declarations
-//void geigerSensorSetup();
-//void geigerSensorLoop();
-//unsigned long integrationTime();
-//int currentRadiationCount();
-//int currentNoiseCount();
-//unsigned long radiationCount();
-//double cpm();
-//double uSvh();
-//double uSvhError();
 
 class SensorGeiger {
   public:
@@ -29,6 +15,7 @@ class SensorGeiger {
     void setup();
     void loop();
     double cpm();
+    double cpmError();
     double uSvh();
     double uSvhError();
 

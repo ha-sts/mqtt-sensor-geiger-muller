@@ -2,7 +2,6 @@
 #include "Ticker.h"
 #include "sensor-geiger.h"
 
-//RadiationWatch radiationWatch(GM_PULSE, GM_NOISE);
 Ticker msgTicker;
 Ticker ledTicker;
 SensorGeiger sensorGeiger(GM_PULSE);
@@ -10,16 +9,13 @@ SensorGeiger sensorGeiger(GM_PULSE);
 void setup() {
   pinMode(ESP8266_LED, OUTPUT);
   Serial.begin(115200);
-  //radiationWatch.setup();
-  //radiationWatch.registerRadiationCallback(&onRadiation);
   msgTicker.attach(6, onMqttTimer);
 
-  //geigerSensorSetup();
   sensorGeiger.setup();
+  //radiationWatch.registerRadiationCallback(&onRadiation);
 }
 
 void loop() {
-  //geigerSensorLoop();
   sensorGeiger.loop();
 }
 
@@ -39,14 +35,11 @@ void onRadiation() {
 void onMqttTimer() {
   // Send an MQTT message with the latest counts
   Serial.println("A wild gamma ray appeared");
-  //Serial.print(uSvh());
   Serial.print(sensorGeiger.uSvh());
   Serial.print(" uSv/h +/- ");
-  //Serial.println(uSvhError());
   Serial.println(sensorGeiger.uSvhError());
-  //Serial.print(radiationCount());
-  //Serial.print(" - ");
-  //Serial.print(currentRadiationCount());
-  //Serial.print(" - ");
-  //Serial.println(currentNoiseCount());
+  Serial.print("CPM: ");
+  Serial.print(sensorGeiger.cpm());
+  Serial.print("   CPM Error: ");
+  Serial.println(sensorGeiger.cpmError());
 }
